@@ -17,10 +17,14 @@ export default function UploadFile() {
         }}
         onChange={(e) => {
           // post request
-          const files = e.target.files;
+          const files = e.target.files as FileList;
+          const formData = new FormData();
+          for (const file of files) {
+            formData.append(file.name, file);
+          }
           fetch("/api/upload", {
             method: "POST",
-            body: files,
+            body: formData,
           });
         }}
       />
